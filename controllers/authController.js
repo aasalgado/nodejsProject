@@ -16,6 +16,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangeAt: req.body.passwordChangeAt,
+    role: req.body.role,
   });
 
   const token = signToken(newUser._id);
@@ -53,14 +54,14 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
-  console.log('auth', req.headers.authorization);
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
   }
-  console.log('token', token);
+
   if (!token) {
     return next(
       new AppError('You are not logged in! Please log in to get access.', 401),
@@ -69,17 +70,15 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // verify token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log('decoded', decoded);
 
   const freshUser = await User.findById(decoded.id);
-  console.log('freshUser', freshUser);
 
   if (!freshUser) {
     return next(
       new AppError('The user belonging to this token no longer exists', 401),
     );
   }
-  console.log(freshUser.changedPasswordAfter(decoded.iat));
+
   // check if user changed password
   if (freshUser.changedPasswordAfter(decoded.iat)) {
     return next(
@@ -91,3 +90,27 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+exports.restrictTo =
+  (...roles) =>
+  (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action', 403),
+      );
+    }
+
+    next();
+  };
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError('There is no user with email address.', 404));
+  }
+
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+});
+
+exports.forgotPassword = (req, res, next) => {};
