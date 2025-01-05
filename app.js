@@ -26,6 +26,38 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set security HTTP headers
 app.use(helmet());
 
+// Set Content Security Policy (CSP) using Helmet
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"], // Allow resources to be loaded only from the same origin
+      scriptSrc: ["'self'", 'https://api.mapbox.com'], // Allow scripts from the same origin and Mapbox
+      styleSrc: [
+        "'self'",
+        'https://fonts.googleapis.com',
+        'https://api.mapbox.com',
+      ], // Allow styles from the same origin, Google Fonts and Allow Mapbox CSS
+      styleSrcElem: [
+        "'self'",
+        'https://fonts.googleapis.com',
+        'https://api.mapbox.com',
+      ], // Allow external stylesheets (including Mapbox)
+      fontSrc: ["'self'", 'https://fonts.gstatic.com'], // Allow fonts from Google Fonts
+      imgSrc: ["'self'", 'data:', 'https://api.mapbox.com'], // Allow images from the same origin, data URLs, and Mapbox
+      connectSrc: [
+        "'self'",
+        'https://api.mapbox.com',
+        'https://events.mapbox.com',
+      ], // Allow connections to Mapbox API
+      frameSrc: ["'none'"], // Disallow embedding of the site in iframes
+      objectSrc: ["'none'"], // Disallow Flash, Java, or other plugin-based content
+      baseUri: ["'self'"], // Allow base URI to be from the same origin
+      formAction: ["'self'"], // Allow form submission to the same origin
+      workerSrc: ["'self'", 'blob:', 'https://api.mapbox.com'], // Allow Web Workers from blob URLs and Mapbox
+    },
+  }),
+);
+
 // Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -62,9 +94,6 @@ app.use(
   }),
 );
 
-// Serving static files
-// app.use(express.static(`${__dirname}/public`));
-
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   // console.log(req.headers);
@@ -72,7 +101,6 @@ app.use((req, res, next) => {
 });
 
 // 3) Routes
-
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
