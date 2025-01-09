@@ -32,7 +32,11 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"], // Allow resources to be loaded only from the same origin
-      scriptSrc: ["'self'", 'https://api.mapbox.com'], // Allow scripts from the same origin and Mapbox
+      scriptSrc: [
+        "'self'",
+        'https://api.mapbox.com',
+        'https://cdnjs.cloudflare.com',
+      ], // Allow scripts from the same origin and Mapbox
       styleSrc: [
         "'self'",
         'https://fonts.googleapis.com',
