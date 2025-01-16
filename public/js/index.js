@@ -12,6 +12,7 @@ if (mapBox) {
 }
 
 if (loginForm) {
+  console.log('submit');
   loginForm.querySelector('.form').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
