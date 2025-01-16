@@ -36,6 +36,9 @@ app.use(
         "'self'",
         'https://api.mapbox.com',
         'https://cdnjs.cloudflare.com',
+        'https://cdn.jsdelivr.net',
+        'https://unpkg.com',
+        'https://cdn.skypack.dev',
       ], // Allow scripts from the same origin and Mapbox
       styleSrc: [
         "'self'",
