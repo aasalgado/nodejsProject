@@ -1,4 +1,5 @@
-import axios from 'https://cdn.skypack.dev/axios';
+/* eslint-disable */
+import axios from 'axios';
 
 export const login = async (email, password) => {
   console.log('login');

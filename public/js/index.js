@@ -1,10 +1,12 @@
 /* eslint-disable */
-// import "core-js/stable";
-// import "regenerator-runtime/runtime";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
-import '@babel/polyfill';
 import { displayMap } from './mapbox';
 import { login } from './login';
+
+const mapBox = document.getElementById('map');
+const loginForm = document.querySelector('.form--login');
 
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
