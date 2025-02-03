@@ -2,7 +2,7 @@
   "name": "natours",
   "version": "1.0.0",
   "description": "node js project",
-  "source": "public/js/test.js",
+  "source": "public/js/index.js",
   "main": "public/js/main.js",
   "module": "public/js/bundle.js",
   "scripts": {
@@ -15,8 +15,10 @@
   "author": "Anthony Salgado",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.9",
+    "axios": "^0.27.2",
+    "base64-js": "^1.5.1",
     "bcryptjs": "^2.4.3",
+    "buffer": "^6.0.3",
     "cookie-parser": "^1.4.7",
     "core-js": "^3.40.0",
     "dotenv": "^16.4.5",
@@ -25,14 +27,20 @@
     "express-rate-limit": "^7.4.1",
     "helmet": "^8.0.0",
     "hpp": "^0.2.3",
+    "http-browserify": "^1.7.0",
+    "ieee754": "^1.2.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^5.13.22",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.16",
+    "process": "^0.11.10",
     "pug": "^3.0.3",
     "regenerator-runtime": "^0.14.1",
     "sanitize-html": "^2.14.0",
     "slugify": "^1.6.6",
+    "stream-browserify": "^3.0.0",
+    "url": "^0.11.4",
+    "util": "^0.12.5",
     "validator": "^13.12.0"
   },
   "devDependencies": {
@@ -50,5 +58,32 @@
   },
   "engines": {
     "node": ">=10.0.0"
-  }
+  },
+  "targets": {
+    "default": {
+      "includeNodeModules": [
+        "axios",
+        "util",
+        "form-data",
+        "combined-stream",
+        "process",
+        "buffer",
+        "base64-js",
+        "ieee754"
+      ]
+    },
+    "module": {
+      "includeNodeModules": [
+        "axios",
+        "util",
+        "form-data",
+        "combined-stream",
+        "process",
+        "buffer",
+        "base64-js",
+        "ieee754"
+      ]
+    }
+  },
+  "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead"
 }
