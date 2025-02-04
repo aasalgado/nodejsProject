@@ -69,7 +69,9 @@
         "process",
         "buffer",
         "base64-js",
-        "ieee754"
+        "ieee754",
+        "regenerator-runtime",
+        "core-js"
       ]
     },
     "module": {
@@ -81,7 +83,9 @@
         "process",
         "buffer",
         "base64-js",
-        "ieee754"
+        "ieee754",
+        "regenerator-runtime",
+        "core-js"
       ]
     }
   },
