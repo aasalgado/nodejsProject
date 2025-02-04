@@ -1,11 +1,17 @@
+require("regenerator-runtime/runtime");
+require("core-js/modules/es.regexp.flags.js");
+require("core-js/modules/es.typed-array.set.js");
+require("core-js/modules/web.immediate.js");
 var $6JWY2$axios = require("axios");
 
 
 function $parcel$interopDefault(a) {
   return a && a.__esModule ? a.default : a;
 }
-/* eslint-disable */ // import 'core-js/stable';
-// import 'regenerator-runtime/runtime';
+/* eslint-disable */ 
+
+
+
 /* eslint-disable */ const $9380380b0f8e95e3$export$4c5dd147b21b9176 = (locations)=>{
     mapboxgl.accessToken = 'pk.eyJ1IjoiYXNhbGdhZG8iLCJhIjoiY201aGxnODNkMG01NzJscHdoMGZoZnRsdiJ9.-VrAGV4v0O9pvBZdayP7FA';
     const map = new mapboxgl.Map({
@@ -42,6 +48,18 @@ function $parcel$interopDefault(a) {
 
 
 /* eslint-disable */ 
+/* eslint-disable */ const $99f1ab01dcb3b4ee$export$516836c6a9dfc573 = ()=>{
+    const el = document.querySelector('.alert');
+    if (el) el.parentElement.removeChild(el);
+};
+const $99f1ab01dcb3b4ee$export$de026b00723010c1 = (type, msg)=>{
+    $99f1ab01dcb3b4ee$export$516836c6a9dfc573();
+    const markup = `<div class="alert alert--${type}">${msg}</div>`;
+    document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+    window.setTimeout($99f1ab01dcb3b4ee$export$516836c6a9dfc573, 5000);
+};
+
+
 const $0a5b4f30ba3d68de$export$596d806903d1f59e = async (email, password)=>{
     console.log(email, password);
     try {
@@ -53,21 +71,14 @@ const $0a5b4f30ba3d68de$export$596d806903d1f59e = async (email, password)=>{
                 password: password
             }
         });
-        // const res = axios
-        //   .post('http://127.0.0.1:3000/api/v1/users/login', {
-        //     email: 'user@example.com',
-        //     password: 'yourpassword',
-        //   })
-        //   .then((response) => console.log(response))
-        //   .catch((error) => console.error(error));
         if (res.data.status === 'success') {
-            alert('Logged in successfully!');
+            (0, $99f1ab01dcb3b4ee$export$de026b00723010c1)('success', 'Logged in successfully!');
             window.setTimeout(()=>{
                 location.assign('/');
             }, 1500);
         }
     } catch (err) {
-        alert(err.response.data.message);
+        (0, $99f1ab01dcb3b4ee$export$de026b00723010c1)('error', err.response.data.message);
     }
 };
 
