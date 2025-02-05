@@ -614,6 +614,7 @@ var _mapbox = require("./mapbox");
 var _login = require("./login");
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
+const logOutBtn = document.querySelector('.nav__el--logout');
 if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     (0, _mapbox.displayMap)(locations);
@@ -624,6 +625,7 @@ if (loginForm) loginForm.addEventListener('submit', (e)=>{
     const password = document.getElementById('password').value;
     (0, _login.login)(email, password);
 });
+if (logOutBtn) logOutBtn.addEventListener('click', (0, _login.logout));
 
 },{"core-js/modules/es.symbol.description.js":"lJ6Di","core-js/modules/es.array.flat.js":"72E2L","core-js/modules/es.array.flat-map.js":"8miL0","core-js/modules/es.array.sort.js":"23lrA","core-js/modules/es.array.unscopables.flat.js":"kQne3","core-js/modules/es.array.unscopables.flat-map.js":"kdY4k","core-js/modules/es.math.hypot.js":"amOqa","core-js/modules/es.object.from-entries.js":"7EKqc","core-js/modules/es.promise.js":"8kXKf","core-js/modules/es.promise.finally.js":"aHsiA","core-js/modules/es.regexp.flags.js":"cjwen","core-js/modules/es.typed-array.set.js":"dUaAs","core-js/modules/es.typed-array.sort.js":"4mT8h","core-js/modules/web.queue-microtask.js":"cycgb","regenerator-runtime/runtime":"dc6vk","./mapbox":"ixVRF","./login":"am6JG"}],"lJ6Di":[function(require,module,exports,__globalThis) {
 // `Symbol.prototype.description` getter
@@ -4577,6 +4579,7 @@ exports.export = function(dest, destName, get) {
 /* eslint-disable */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "login", ()=>login);
+parcelHelpers.export(exports, "logout", ()=>logout);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _alert = require("./alert");
@@ -4599,6 +4602,19 @@ const login = async (email, password)=>{
         }
     } catch (err) {
         (0, _alert.showAlert)('error', err.response.data.message);
+    }
+};
+const logout = async ()=>{
+    try {
+        const res = await (0, _axiosDefault.default)({
+            method: 'GET',
+            url: 'http://127.0.0.1:3000/api/v1/users/logout'
+        });
+        res.data.status = 'success';
+        location.reload(true);
+    } catch (err) {
+        console.log(err.response);
+        (0, _alert.showAlert)('error', 'Error logging out! Try again.');
     }
 };
 
