@@ -5556,10 +5556,24 @@ const $b8e52c9add9df0bd$export$596d806903d1f59e = async (email, password)=>{
         (0, $70f6f16fea5dd0c5$export$de026b00723010c1)('error', err.response.data.message);
     }
 };
+const $b8e52c9add9df0bd$export$a0973bcfe11b05c9 = async ()=>{
+    try {
+        const res = await (0, (/*@__PURE__*/$parcel$interopDefault($55a01bab3332ce3f$exports)))({
+            method: 'GET',
+            url: 'http://127.0.0.1:3000/api/v1/users/logout'
+        });
+        res.data.status = 'success';
+        location.reload(true);
+    } catch (err) {
+        console.log(err.response);
+        (0, $70f6f16fea5dd0c5$export$de026b00723010c1)('error', 'Error logging out! Try again.');
+    }
+};
 
 
 const $5bc97fa7fd48c45c$var$mapBox = document.getElementById('map');
 const $5bc97fa7fd48c45c$var$loginForm = document.querySelector('.form--login');
+const $5bc97fa7fd48c45c$var$logOutBtn = document.querySelector('.nav__el--logout');
 if ($5bc97fa7fd48c45c$var$mapBox) {
     const locations = JSON.parse($5bc97fa7fd48c45c$var$mapBox.dataset.locations);
     (0, $d5372146ae7dfe12$export$4c5dd147b21b9176)(locations);
@@ -5570,6 +5584,7 @@ if ($5bc97fa7fd48c45c$var$loginForm) $5bc97fa7fd48c45c$var$loginForm.addEventLis
     const password = document.getElementById('password').value;
     (0, $b8e52c9add9df0bd$export$596d806903d1f59e)(email, password);
 });
+if ($5bc97fa7fd48c45c$var$logOutBtn) $5bc97fa7fd48c45c$var$logOutBtn.addEventListener('click', (0, $b8e52c9add9df0bd$export$a0973bcfe11b05c9));
 
 
 //# sourceMappingURL=bundle.js.map
