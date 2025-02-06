@@ -18,6 +18,7 @@ const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
+// telling express we are using pug
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -114,7 +115,7 @@ app.use(
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log(req.cookies);
+  // console.log(req.cookies);
   next();
 });
 

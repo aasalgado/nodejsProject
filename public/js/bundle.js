@@ -5571,9 +5571,27 @@ const $b8e52c9add9df0bd$export$a0973bcfe11b05c9 = async ()=>{
 };
 
 
+/* eslint-disable */ 
+
+const $e3ceba5d32523c57$export$f558026a994b6051 = async (data, type)=>{
+    try {
+        const url = type === 'password' ? 'http://127.0.0.1:3000/api/v1/users/updateMyPassword' : 'http://127.0.0.1:3000/api/v1/users/updateMe';
+        const res = await (0, (/*@__PURE__*/$parcel$interopDefault($55a01bab3332ce3f$exports)))({
+            method: 'PATCH',
+            url: url,
+            data: data
+        });
+        if (res.data.status === 'success') (0, $70f6f16fea5dd0c5$export$de026b00723010c1)('success', `${type.toUpperCase()} updated successfully!`);
+    } catch (err) {
+        (0, $70f6f16fea5dd0c5$export$de026b00723010c1)('error', err.response.data.message);
+    }
+};
+
+
 const $5bc97fa7fd48c45c$var$mapBox = document.getElementById('map');
 const $5bc97fa7fd48c45c$var$loginForm = document.querySelector('.form--login');
 const $5bc97fa7fd48c45c$var$logOutBtn = document.querySelector('.nav__el--logout');
+const $5bc97fa7fd48c45c$var$userDataForm = document.querySelector('.form-user-data');
 if ($5bc97fa7fd48c45c$var$mapBox) {
     const locations = JSON.parse($5bc97fa7fd48c45c$var$mapBox.dataset.locations);
     (0, $d5372146ae7dfe12$export$4c5dd147b21b9176)(locations);
@@ -5585,6 +5603,15 @@ if ($5bc97fa7fd48c45c$var$loginForm) $5bc97fa7fd48c45c$var$loginForm.addEventLis
     (0, $b8e52c9add9df0bd$export$596d806903d1f59e)(email, password);
 });
 if ($5bc97fa7fd48c45c$var$logOutBtn) $5bc97fa7fd48c45c$var$logOutBtn.addEventListener('click', (0, $b8e52c9add9df0bd$export$a0973bcfe11b05c9));
+if ($5bc97fa7fd48c45c$var$userDataForm) $5bc97fa7fd48c45c$var$userDataForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    (0, $e3ceba5d32523c57$export$f558026a994b6051)({
+        name: name,
+        email: email
+    }, 'data');
+});
 
 
 //# sourceMappingURL=bundle.js.map
