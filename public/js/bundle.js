@@ -5592,6 +5592,7 @@ const $5bc97fa7fd48c45c$var$mapBox = document.getElementById('map');
 const $5bc97fa7fd48c45c$var$loginForm = document.querySelector('.form--login');
 const $5bc97fa7fd48c45c$var$logOutBtn = document.querySelector('.nav__el--logout');
 const $5bc97fa7fd48c45c$var$userDataForm = document.querySelector('.form-user-data');
+const $5bc97fa7fd48c45c$var$userPasswordForm = document.querySelector('.form-user-password');
 if ($5bc97fa7fd48c45c$var$mapBox) {
     const locations = JSON.parse($5bc97fa7fd48c45c$var$mapBox.dataset.locations);
     (0, $d5372146ae7dfe12$export$4c5dd147b21b9176)(locations);
@@ -5611,6 +5612,22 @@ if ($5bc97fa7fd48c45c$var$userDataForm) $5bc97fa7fd48c45c$var$userDataForm.addEv
         name: name,
         email: email
     }, 'data');
+});
+if ($5bc97fa7fd48c45c$var$userPasswordForm) $5bc97fa7fd48c45c$var$userPasswordForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    document.querySelector('.btn--save-password').textContent = 'Updating...';
+    const passwordCurrent = document.getElementById('password-current').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+    await (0, $e3ceba5d32523c57$export$f558026a994b6051)({
+        passwordCurrent: passwordCurrent,
+        password: password,
+        passwordConfirm: passwordConfirm
+    }, 'password');
+    document.querySelector('.btn--save-password').textContent = 'Save password';
+    document.getElementById('password-current').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('password-confirm').value = '';
 });
 
 
