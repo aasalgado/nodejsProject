@@ -96,9 +96,27 @@ const $0a5b4f30ba3d68de$export$a0973bcfe11b05c9 = async ()=>{
 };
 
 
+/* eslint-disable */ 
+
+const $5a9b1cd588251d2b$export$f558026a994b6051 = async (data, type)=>{
+    try {
+        const url = type === 'password' ? 'http://127.0.0.1:3000/api/v1/users/updateMyPassword' : 'http://127.0.0.1:3000/api/v1/users/updateMe';
+        const res = await (0, ($parcel$interopDefault($6JWY2$axios)))({
+            method: 'PATCH',
+            url: url,
+            data: data
+        });
+        if (res.data.status === 'success') (0, $99f1ab01dcb3b4ee$export$de026b00723010c1)('success', `${type.toUpperCase()} updated successfully!`);
+    } catch (err) {
+        (0, $99f1ab01dcb3b4ee$export$de026b00723010c1)('error', err.response.data.message);
+    }
+};
+
+
 const $fc7abcdcd4d7604b$var$mapBox = document.getElementById('map');
 const $fc7abcdcd4d7604b$var$loginForm = document.querySelector('.form--login');
 const $fc7abcdcd4d7604b$var$logOutBtn = document.querySelector('.nav__el--logout');
+const $fc7abcdcd4d7604b$var$userDataForm = document.querySelector('.form-user-data');
 if ($fc7abcdcd4d7604b$var$mapBox) {
     const locations = JSON.parse($fc7abcdcd4d7604b$var$mapBox.dataset.locations);
     (0, $9380380b0f8e95e3$export$4c5dd147b21b9176)(locations);
@@ -110,6 +128,15 @@ if ($fc7abcdcd4d7604b$var$loginForm) $fc7abcdcd4d7604b$var$loginForm.addEventLis
     (0, $0a5b4f30ba3d68de$export$596d806903d1f59e)(email, password);
 });
 if ($fc7abcdcd4d7604b$var$logOutBtn) $fc7abcdcd4d7604b$var$logOutBtn.addEventListener('click', (0, $0a5b4f30ba3d68de$export$a0973bcfe11b05c9));
+if ($fc7abcdcd4d7604b$var$userDataForm) $fc7abcdcd4d7604b$var$userDataForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    (0, $5a9b1cd588251d2b$export$f558026a994b6051)({
+        name: name,
+        email: email
+    }, 'data');
+});
 
 
 //# sourceMappingURL=main.js.map

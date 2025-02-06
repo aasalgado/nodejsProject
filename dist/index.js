@@ -612,9 +612,11 @@ var _webQueueMicrotaskJs = require("core-js/modules/web.queue-microtask.js");
 var _runtime = require("regenerator-runtime/runtime");
 var _mapbox = require("./mapbox");
 var _login = require("./login");
+var _updateSettings = require("./updateSettings");
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
+const userDataForm = document.querySelector('.form-user-data');
 if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     (0, _mapbox.displayMap)(locations);
@@ -626,8 +628,17 @@ if (loginForm) loginForm.addEventListener('submit', (e)=>{
     (0, _login.login)(email, password);
 });
 if (logOutBtn) logOutBtn.addEventListener('click', (0, _login.logout));
+if (userDataForm) userDataForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    (0, _updateSettings.updateSettings)({
+        name,
+        email
+    }, 'data');
+});
 
-},{"core-js/modules/es.symbol.description.js":"lJ6Di","core-js/modules/es.array.flat.js":"72E2L","core-js/modules/es.array.flat-map.js":"8miL0","core-js/modules/es.array.sort.js":"23lrA","core-js/modules/es.array.unscopables.flat.js":"kQne3","core-js/modules/es.array.unscopables.flat-map.js":"kdY4k","core-js/modules/es.math.hypot.js":"amOqa","core-js/modules/es.object.from-entries.js":"7EKqc","core-js/modules/es.promise.js":"8kXKf","core-js/modules/es.promise.finally.js":"aHsiA","core-js/modules/es.regexp.flags.js":"cjwen","core-js/modules/es.typed-array.set.js":"dUaAs","core-js/modules/es.typed-array.sort.js":"4mT8h","core-js/modules/web.queue-microtask.js":"cycgb","regenerator-runtime/runtime":"dc6vk","./mapbox":"ixVRF","./login":"am6JG"}],"lJ6Di":[function(require,module,exports,__globalThis) {
+},{"core-js/modules/es.symbol.description.js":"lJ6Di","core-js/modules/es.array.flat.js":"72E2L","core-js/modules/es.array.flat-map.js":"8miL0","core-js/modules/es.array.sort.js":"23lrA","core-js/modules/es.array.unscopables.flat.js":"kQne3","core-js/modules/es.array.unscopables.flat-map.js":"kdY4k","core-js/modules/es.math.hypot.js":"amOqa","core-js/modules/es.object.from-entries.js":"7EKqc","core-js/modules/es.promise.js":"8kXKf","core-js/modules/es.promise.finally.js":"aHsiA","core-js/modules/es.regexp.flags.js":"cjwen","core-js/modules/es.typed-array.set.js":"dUaAs","core-js/modules/es.typed-array.sort.js":"4mT8h","core-js/modules/web.queue-microtask.js":"cycgb","regenerator-runtime/runtime":"dc6vk","./mapbox":"ixVRF","./login":"am6JG","./updateSettings":"cwstn"}],"lJ6Di":[function(require,module,exports,__globalThis) {
 // `Symbol.prototype.description` getter
 // https://tc39.es/ecma262/#sec-symbol.prototype.description
 'use strict';
@@ -7037,6 +7048,27 @@ const showAlert = (type, msg)=>{
     window.setTimeout(hideAlert, 5000);
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe"}]},["KTUUg","k1jcI"], "k1jcI", "parcelRequire94c2")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe"}],"cwstn":[function(require,module,exports,__globalThis) {
+/* eslint-disable */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "updateSettings", ()=>updateSettings);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("./alert");
+const updateSettings = async (data, type)=>{
+    try {
+        const url = type === 'password' ? 'http://127.0.0.1:3000/api/v1/users/updateMyPassword' : 'http://127.0.0.1:3000/api/v1/users/updateMe';
+        const res = await (0, _axiosDefault.default)({
+            method: 'PATCH',
+            url,
+            data
+        });
+        if (res.data.status === 'success') (0, _alert.showAlert)('success', `${type.toUpperCase()} updated successfully!`);
+    } catch (err) {
+        (0, _alert.showAlert)('error', err.response.data.message);
+    }
+};
+
+},{"axios":"8Fbkl","@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe","./alert":"7czrd"}]},["KTUUg","k1jcI"], "k1jcI", "parcelRequire94c2")
 
 //# sourceMappingURL=index.js.map
