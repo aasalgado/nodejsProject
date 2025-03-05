@@ -1,7 +1,7 @@
-require("regenerator-runtime/runtime");
 require("core-js/modules/es.regexp.flags.js");
 require("core-js/modules/es.typed-array.set.js");
 require("core-js/modules/web.immediate.js");
+require("regenerator-runtime/runtime");
 var $6JWY2$axios = require("axios");
 
 
@@ -131,12 +131,12 @@ if ($fc7abcdcd4d7604b$var$loginForm) $fc7abcdcd4d7604b$var$loginForm.addEventLis
 if ($fc7abcdcd4d7604b$var$logOutBtn) $fc7abcdcd4d7604b$var$logOutBtn.addEventListener('click', (0, $0a5b4f30ba3d68de$export$a0973bcfe11b05c9));
 if ($fc7abcdcd4d7604b$var$userDataForm) $fc7abcdcd4d7604b$var$userDataForm.addEventListener('submit', (e)=>{
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    (0, $5a9b1cd588251d2b$export$f558026a994b6051)({
-        name: name,
-        email: email
-    }, 'data');
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    console.log(form);
+    (0, $5a9b1cd588251d2b$export$f558026a994b6051)(form, 'data');
 });
 if ($fc7abcdcd4d7604b$var$userPasswordForm) $fc7abcdcd4d7604b$var$userPasswordForm.addEventListener('submit', async (e)=>{
     e.preventDefault();

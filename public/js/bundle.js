@@ -5606,12 +5606,12 @@ if ($5bc97fa7fd48c45c$var$loginForm) $5bc97fa7fd48c45c$var$loginForm.addEventLis
 if ($5bc97fa7fd48c45c$var$logOutBtn) $5bc97fa7fd48c45c$var$logOutBtn.addEventListener('click', (0, $b8e52c9add9df0bd$export$a0973bcfe11b05c9));
 if ($5bc97fa7fd48c45c$var$userDataForm) $5bc97fa7fd48c45c$var$userDataForm.addEventListener('submit', (e)=>{
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    (0, $e3ceba5d32523c57$export$f558026a994b6051)({
-        name: name,
-        email: email
-    }, 'data');
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    console.log(form);
+    (0, $e3ceba5d32523c57$export$f558026a994b6051)(form, 'data');
 });
 if ($5bc97fa7fd48c45c$var$userPasswordForm) $5bc97fa7fd48c45c$var$userPasswordForm.addEventListener('submit', async (e)=>{
     e.preventDefault();

@@ -631,12 +631,12 @@ if (loginForm) loginForm.addEventListener('submit', (e)=>{
 if (logOutBtn) logOutBtn.addEventListener('click', (0, _login.logout));
 if (userDataForm) userDataForm.addEventListener('submit', (e)=>{
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    (0, _updateSettings.updateSettings)({
-        name,
-        email
-    }, 'data');
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    console.log(form);
+    (0, _updateSettings.updateSettings)(form, 'data');
 });
 if (userPasswordForm) userPasswordForm.addEventListener('submit', async (e)=>{
     e.preventDefault();
@@ -4646,7 +4646,7 @@ const logout = async ()=>{
     }
 };
 
-},{"axios":"8Fbkl","@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe","./alert":"7czrd"}],"8Fbkl":[function(require,module,exports,__globalThis) {
+},{"axios":"8Fbkl","./alert":"7czrd","@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe"}],"8Fbkl":[function(require,module,exports,__globalThis) {
 module.exports = require("9f37cef8b0e13afc");
 
 },{"9f37cef8b0e13afc":"juCGq"}],"juCGq":[function(require,module,exports,__globalThis) {
@@ -7086,6 +7086,6 @@ const updateSettings = async (data, type)=>{
     }
 };
 
-},{"axios":"8Fbkl","@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe","./alert":"7czrd"}]},["KTUUg","k1jcI"], "k1jcI", "parcelRequire94c2")
+},{"axios":"8Fbkl","./alert":"7czrd","@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe"}]},["KTUUg","k1jcI"], "k1jcI", "parcelRequire94c2")
 
 //# sourceMappingURL=index.js.map
