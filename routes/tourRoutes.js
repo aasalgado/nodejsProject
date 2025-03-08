@@ -45,11 +45,11 @@ router
   .route('/:id')
   .get(getTour)
   .patch(
-    protect,
-    restrictTo('admin', 'lead-guide'),
-    uploadTourImages,
-    resizeTourImages,
-    updateTour,
+    protect, // Ensure user is authenticated
+    restrictTo('admin', 'lead-guide'), // Ensure user has proper permissions
+    uploadTourImages, // Multer middleware for uploading images
+    resizeTourImages, // Resize images after upload
+    updateTour, // Update the tour data
   )
   .delete(protect, restrictTo('admin', 'lead-guide'), deleteTour);
 
