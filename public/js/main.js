@@ -113,11 +113,31 @@ const $5a9b1cd588251d2b$export$f558026a994b6051 = async (data, type)=>{
 };
 
 
+/* eslint-disable */ 
+
+const $3b1b756c690555b9$var$stripe = Stripe('pk_test_51R0wzQJLOaDBqEgEhiTuCGzXNllTx8mgy2dmGYR2bzD6vHjOS04kLAcXcDz6WdTp4gAoEvYNqmGMt3Sst0566o6c001F2zmbLt');
+const $3b1b756c690555b9$export$8d5bdbf26681c0c2 = async (tourId)=>{
+    try {
+        // 1) Get checkout session from API
+        const session = await (0, ($parcel$interopDefault($6JWY2$axios)))(`http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourId}`);
+        console.log(session);
+        // 2) Create checkout form + chanre credit card
+        await $3b1b756c690555b9$var$stripe.redirectToCheckout({
+            sessionId: session.data.session.id
+        });
+    } catch (err) {
+        console.log(err);
+        (0, $99f1ab01dcb3b4ee$export$de026b00723010c1)('error', err);
+    }
+};
+
+
 const $fc7abcdcd4d7604b$var$mapBox = document.getElementById('map');
 const $fc7abcdcd4d7604b$var$loginForm = document.querySelector('.form--login');
 const $fc7abcdcd4d7604b$var$logOutBtn = document.querySelector('.nav__el--logout');
 const $fc7abcdcd4d7604b$var$userDataForm = document.querySelector('.form-user-data');
 const $fc7abcdcd4d7604b$var$userPasswordForm = document.querySelector('.form-user-password');
+const $fc7abcdcd4d7604b$var$bookBtn = document.getElementById('book-tour');
 if ($fc7abcdcd4d7604b$var$mapBox) {
     const locations = JSON.parse($fc7abcdcd4d7604b$var$mapBox.dataset.locations);
     (0, $9380380b0f8e95e3$export$4c5dd147b21b9176)(locations);
@@ -153,6 +173,11 @@ if ($fc7abcdcd4d7604b$var$userPasswordForm) $fc7abcdcd4d7604b$var$userPasswordFo
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
+});
+if ($fc7abcdcd4d7604b$var$bookBtn) $fc7abcdcd4d7604b$var$bookBtn.addEventListener('click', (e)=>{
+    e.target.textContent = 'Processing...';
+    const { tourId: tourId } = e.target.dataset;
+    (0, $3b1b756c690555b9$export$8d5bdbf26681c0c2)(tourId);
 });
 
 

@@ -5588,11 +5588,31 @@ const $e3ceba5d32523c57$export$f558026a994b6051 = async (data, type)=>{
 };
 
 
+/* eslint-disable */ 
+
+const $2b1a6d06412f3095$var$stripe = Stripe('pk_test_51R0wzQJLOaDBqEgEhiTuCGzXNllTx8mgy2dmGYR2bzD6vHjOS04kLAcXcDz6WdTp4gAoEvYNqmGMt3Sst0566o6c001F2zmbLt');
+const $2b1a6d06412f3095$export$8d5bdbf26681c0c2 = async (tourId)=>{
+    try {
+        // 1) Get checkout session from API
+        const session = await (0, (/*@__PURE__*/$parcel$interopDefault($55a01bab3332ce3f$exports)))(`http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourId}`);
+        console.log(session);
+        // 2) Create checkout form + chanre credit card
+        await $2b1a6d06412f3095$var$stripe.redirectToCheckout({
+            sessionId: session.data.session.id
+        });
+    } catch (err) {
+        console.log(err);
+        (0, $70f6f16fea5dd0c5$export$de026b00723010c1)('error', err);
+    }
+};
+
+
 const $5bc97fa7fd48c45c$var$mapBox = document.getElementById('map');
 const $5bc97fa7fd48c45c$var$loginForm = document.querySelector('.form--login');
 const $5bc97fa7fd48c45c$var$logOutBtn = document.querySelector('.nav__el--logout');
 const $5bc97fa7fd48c45c$var$userDataForm = document.querySelector('.form-user-data');
 const $5bc97fa7fd48c45c$var$userPasswordForm = document.querySelector('.form-user-password');
+const $5bc97fa7fd48c45c$var$bookBtn = document.getElementById('book-tour');
 if ($5bc97fa7fd48c45c$var$mapBox) {
     const locations = JSON.parse($5bc97fa7fd48c45c$var$mapBox.dataset.locations);
     (0, $d5372146ae7dfe12$export$4c5dd147b21b9176)(locations);
@@ -5628,6 +5648,11 @@ if ($5bc97fa7fd48c45c$var$userPasswordForm) $5bc97fa7fd48c45c$var$userPasswordFo
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
+});
+if ($5bc97fa7fd48c45c$var$bookBtn) $5bc97fa7fd48c45c$var$bookBtn.addEventListener('click', (e)=>{
+    e.target.textContent = 'Processing...';
+    const { tourId: tourId } = e.target.dataset;
+    (0, $2b1a6d06412f3095$export$8d5bdbf26681c0c2)(tourId);
 });
 
 

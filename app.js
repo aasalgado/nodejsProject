@@ -14,6 +14,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
@@ -40,6 +41,7 @@ app.use(
         'https://cdn.jsdelivr.net',
         'https://unpkg.com',
         'https://cdn.skypack.dev',
+        'https://js.stripe.com',
       ], // Allow scripts from the same origin and Mapbox
       styleSrc: [
         "'self'",
@@ -58,7 +60,7 @@ app.use(
         'https://api.mapbox.com',
         'https://events.mapbox.com',
       ], // Allow connections to Mapbox API
-      frameSrc: ["'none'"], // Disallow embedding of the site in iframes
+      frameSrc: ['https://js.stripe.com'], // Disallow embedding of the site in iframes
       objectSrc: ["'none'"], // Disallow Flash, Java, or other plugin-based content
       baseUri: ["'self'"], // Allow base URI to be from the same origin
       formAction: ["'self'"], // Allow form submission to the same origin
@@ -124,6 +126,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

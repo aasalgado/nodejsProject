@@ -613,11 +613,13 @@ var _runtime = require("regenerator-runtime/runtime");
 var _mapbox = require("./mapbox");
 var _login = require("./login");
 var _updateSettings = require("./updateSettings");
+var _stripe = require("./stripe");
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
+const bookBtn = document.getElementById('book-tour');
 if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     (0, _mapbox.displayMap)(locations);
@@ -654,8 +656,13 @@ if (userPasswordForm) userPasswordForm.addEventListener('submit', async (e)=>{
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
 });
+if (bookBtn) bookBtn.addEventListener('click', (e)=>{
+    e.target.textContent = 'Processing...';
+    const { tourId } = e.target.dataset;
+    (0, _stripe.bookTour)(tourId);
+});
 
-},{"core-js/modules/es.symbol.description.js":"lJ6Di","core-js/modules/es.array.flat.js":"72E2L","core-js/modules/es.array.flat-map.js":"8miL0","core-js/modules/es.array.sort.js":"23lrA","core-js/modules/es.array.unscopables.flat.js":"kQne3","core-js/modules/es.array.unscopables.flat-map.js":"kdY4k","core-js/modules/es.math.hypot.js":"amOqa","core-js/modules/es.object.from-entries.js":"7EKqc","core-js/modules/es.promise.js":"8kXKf","core-js/modules/es.promise.finally.js":"aHsiA","core-js/modules/es.regexp.flags.js":"cjwen","core-js/modules/es.typed-array.set.js":"dUaAs","core-js/modules/es.typed-array.sort.js":"4mT8h","core-js/modules/web.queue-microtask.js":"cycgb","regenerator-runtime/runtime":"dc6vk","./mapbox":"ixVRF","./login":"am6JG","./updateSettings":"cwstn"}],"lJ6Di":[function(require,module,exports,__globalThis) {
+},{"core-js/modules/es.symbol.description.js":"lJ6Di","core-js/modules/es.array.flat.js":"72E2L","core-js/modules/es.array.flat-map.js":"8miL0","core-js/modules/es.array.sort.js":"23lrA","core-js/modules/es.array.unscopables.flat.js":"kQne3","core-js/modules/es.array.unscopables.flat-map.js":"kdY4k","core-js/modules/es.math.hypot.js":"amOqa","core-js/modules/es.object.from-entries.js":"7EKqc","core-js/modules/es.promise.js":"8kXKf","core-js/modules/es.promise.finally.js":"aHsiA","core-js/modules/es.regexp.flags.js":"cjwen","core-js/modules/es.typed-array.set.js":"dUaAs","core-js/modules/es.typed-array.sort.js":"4mT8h","core-js/modules/web.queue-microtask.js":"cycgb","regenerator-runtime/runtime":"dc6vk","./mapbox":"ixVRF","./login":"am6JG","./updateSettings":"cwstn","./stripe":"5Wizu"}],"lJ6Di":[function(require,module,exports,__globalThis) {
 // `Symbol.prototype.description` getter
 // https://tc39.es/ecma262/#sec-symbol.prototype.description
 'use strict';
@@ -7086,6 +7093,29 @@ const updateSettings = async (data, type)=>{
     }
 };
 
-},{"axios":"8Fbkl","./alert":"7czrd","@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe"}]},["KTUUg","k1jcI"], "k1jcI", "parcelRequire94c2")
+},{"axios":"8Fbkl","./alert":"7czrd","@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe"}],"5Wizu":[function(require,module,exports,__globalThis) {
+/* eslint-disable */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "bookTour", ()=>bookTour);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("./alert");
+const stripe = Stripe('pk_test_51R0wzQJLOaDBqEgEhiTuCGzXNllTx8mgy2dmGYR2bzD6vHjOS04kLAcXcDz6WdTp4gAoEvYNqmGMt3Sst0566o6c001F2zmbLt');
+const bookTour = async (tourId)=>{
+    try {
+        // 1) Get checkout session from API
+        const session = await (0, _axiosDefault.default)(`http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourId}`);
+        console.log(session);
+        // 2) Create checkout form + chanre credit card
+        await stripe.redirectToCheckout({
+            sessionId: session.data.session.id
+        });
+    } catch (err) {
+        console.log(err);
+        (0, _alert.showAlert)('error', err);
+    }
+};
+
+},{"axios":"8Fbkl","@parcel/transformer-js/src/esmodule-helpers.js":"3CiGe","./alert":"7czrd"}]},["KTUUg","k1jcI"], "k1jcI", "parcelRequire94c2")
 
 //# sourceMappingURL=index.js.map
