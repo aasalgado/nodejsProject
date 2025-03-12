@@ -61,11 +61,10 @@ const $99f1ab01dcb3b4ee$export$de026b00723010c1 = (type, msg)=>{
 
 
 const $0a5b4f30ba3d68de$export$596d806903d1f59e = async (email, password)=>{
-    console.log(email, password);
     try {
         const res = await (0, ($parcel$interopDefault($6JWY2$axios)))({
             method: 'POST',
-            url: 'http://127.0.0.1:3000/api/v1/users/login',
+            url: '/api/v1/users/login',
             data: {
                 email: email,
                 password: password
@@ -85,12 +84,11 @@ const $0a5b4f30ba3d68de$export$a0973bcfe11b05c9 = async ()=>{
     try {
         const res = await (0, ($parcel$interopDefault($6JWY2$axios)))({
             method: 'GET',
-            url: 'http://127.0.0.1:3000/api/v1/users/logout'
+            url: '/api/v1/users/logout'
         });
         res.data.status = 'success';
         location.reload(true);
     } catch (err) {
-        console.log(err.response);
         (0, $99f1ab01dcb3b4ee$export$de026b00723010c1)('error', 'Error logging out! Try again.');
     }
 };
@@ -100,7 +98,7 @@ const $0a5b4f30ba3d68de$export$a0973bcfe11b05c9 = async ()=>{
 
 const $5a9b1cd588251d2b$export$f558026a994b6051 = async (data, type)=>{
     try {
-        const url = type === 'password' ? 'http://127.0.0.1:3000/api/v1/users/updateMyPassword' : 'http://127.0.0.1:3000/api/v1/users/updateMe';
+        const url = type === 'password' ? '/api/v1/users/updateMyPassword' : '/api/v1/users/updateMe';
         const res = await (0, ($parcel$interopDefault($6JWY2$axios)))({
             method: 'PATCH',
             url: url,
@@ -119,8 +117,8 @@ const $3b1b756c690555b9$var$stripe = Stripe('pk_test_51R0wzQJLOaDBqEgEhiTuCGzXNl
 const $3b1b756c690555b9$export$8d5bdbf26681c0c2 = async (tourId)=>{
     try {
         // 1) Get checkout session from API
-        const session = await (0, ($parcel$interopDefault($6JWY2$axios)))(`http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourId}`);
-        console.log(session);
+        const session = await (0, ($parcel$interopDefault($6JWY2$axios)))(`/api/v1/bookings/checkout-session/${tourId}`);
+        // console.log(session);
         // 2) Create checkout form + chanre credit card
         await $3b1b756c690555b9$var$stripe.redirectToCheckout({
             sessionId: session.data.session.id
@@ -155,7 +153,6 @@ if ($fc7abcdcd4d7604b$var$userDataForm) $fc7abcdcd4d7604b$var$userDataForm.addEv
     form.append('name', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
     form.append('photo', document.getElementById('photo').files[0]);
-    console.log(form);
     (0, $5a9b1cd588251d2b$export$f558026a994b6051)(form, 'data');
 });
 if ($fc7abcdcd4d7604b$var$userPasswordForm) $fc7abcdcd4d7604b$var$userPasswordForm.addEventListener('submit', async (e)=>{
