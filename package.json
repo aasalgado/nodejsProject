@@ -10,7 +10,7 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
     "watch": "parcel watch",
-    "build": "parcel build"
+    "build": "NODE_ENV=production parcel build"
   },
   "author": "Anthony Salgado",
   "license": "ISC",
@@ -66,6 +66,7 @@
   },
   "targets": {
     "default": {
+      "optimize": true,
       "includeNodeModules": [
         "axios",
         "util",
@@ -80,6 +81,7 @@
       ]
     },
     "module": {
+      "optimize": true,
       "includeNodeModules": [
         "axios",
         "util",
