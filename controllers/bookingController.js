@@ -3,6 +3,7 @@ const Tour = require('../models/tourModel');
 const Booking = require('../models/bookingModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
+const User = require('../models/userModel');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the currently booked tour
@@ -40,12 +41,12 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
-// exports.createBookingCheckout = catchAsync(async (req, res, next) => {
-//   const { tour, user, price } = req.query;
-//   if (!tour && !user && !price) return next();
-//   await Booking.create({ tour, user, price });
-//   res.redirect(req.originalUrl.split('?')[0]);
-// });
+const createBookingCheckout = async (session) => {
+  const tour = session.client_reference_id;
+  const user = (await User.findOne({ email: session.customer_email })).id;
+  const price = session.display_items[0].amount / 100;
+  await Booking.create({ tour, user, price });
+};
 
 exports.webhookCheckout = (req, res, next) => {
   const signature = req.headers['stripe-signature'];
