@@ -42,11 +42,26 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
+// const createBookingCheckout = async (session) => {
+//   const tour = session.client_reference_id;
+//   const user = (await User.findOne({ email: session.customer_email })).id;
+//   const price = session.display_items[0].amount / 100;
+//   await Booking.create({ tour, user, price });
+// };
+
 const createBookingCheckout = async (session) => {
   const tour = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
-  const price = session.display_items[0].amount / 100;
-  await Booking.create({ tour, user, price });
+  const price = session.amount_total / 100;
+
+  console.log('Creating booking:', { tour, user, price });
+
+  try {
+    const booking = await Booking.create({ tour, user, price });
+    console.log('Booking created successfully:', booking);
+  } catch (err) {
+    console.log('Error creating booking:', err);
+  }
 };
 
 exports.webhookCheckout = (req, res, next) => {
@@ -62,9 +77,14 @@ exports.webhookCheckout = (req, res, next) => {
   } catch (err) {
     return res.status(400).send(`Webhook error: ${err.message}`);
   }
-
-  if (event.type === 'checkout.session.completed')
+  console.log({ eventType: event.type, event });
+  if (
+    event.type === 'checkout.session' ||
+    event.type === 'checkout.session.completed'
+  ) {
+    console.log('Checkout session event received:', event.data.object);
     createBookingCheckout(event.data.object);
+  }
 
   res.status(200).json({ received: true });
 };
