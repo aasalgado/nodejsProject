@@ -11,7 +11,7 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
     "watch": "parcel watch",
-    "build": "NODE_ENV=production parcel build"
+    "build": "parcel build"
   },
   "author": "Anthony Salgado",
   "license": "ISC",

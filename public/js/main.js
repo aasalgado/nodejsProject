@@ -52,11 +52,11 @@ function $parcel$interopDefault(a) {
     const el = document.querySelector('.alert');
     if (el) el.parentElement.removeChild(el);
 };
-const $99f1ab01dcb3b4ee$export$de026b00723010c1 = (type, msg)=>{
+const $99f1ab01dcb3b4ee$export$de026b00723010c1 = (type, msg, time = 7)=>{
     $99f1ab01dcb3b4ee$export$516836c6a9dfc573();
     const markup = `<div class="alert alert--${type}">${msg}</div>`;
     document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
-    window.setTimeout($99f1ab01dcb3b4ee$export$516836c6a9dfc573, 5000);
+    window.setTimeout($99f1ab01dcb3b4ee$export$516836c6a9dfc573, time * 1000);
 };
 
 
@@ -130,6 +130,7 @@ const $3b1b756c690555b9$export$8d5bdbf26681c0c2 = async (tourId)=>{
 };
 
 
+
 const $fc7abcdcd4d7604b$var$mapBox = document.getElementById('map');
 const $fc7abcdcd4d7604b$var$loginForm = document.querySelector('.form--login');
 const $fc7abcdcd4d7604b$var$logOutBtn = document.querySelector('.nav__el--logout');
@@ -176,6 +177,8 @@ if ($fc7abcdcd4d7604b$var$bookBtn) $fc7abcdcd4d7604b$var$bookBtn.addEventListene
     const { tourId: tourId } = e.target.dataset;
     (0, $3b1b756c690555b9$export$8d5bdbf26681c0c2)(tourId);
 });
+const $fc7abcdcd4d7604b$var$alertMessage = document.querySelector('body').dataset.alert;
+if ($fc7abcdcd4d7604b$var$alertMessage) (0, $99f1ab01dcb3b4ee$export$de026b00723010c1)('success', $fc7abcdcd4d7604b$var$alertMessage, 20);
 
 
 //# sourceMappingURL=main.js.map
